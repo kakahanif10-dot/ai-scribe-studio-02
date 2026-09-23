@@ -1,5 +1,5 @@
 // Direct Google Gemini API client (no gateway, no SDK abstraction).
-// Auth uses VITE_GEMINI_API_KEY so Vercel/Lovable env vars are read as-is.
+// The API key is server-only and never exposed through a VITE-prefixed variable.
 
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models'
 
@@ -7,15 +7,7 @@ export type GeminiTurn = { role: 'user' | 'assistant'; content: string }
 
 export function geminiApiKey(): string {
   const env = (typeof process !== 'undefined' ? process.env : {}) as Record<string, string | undefined>
-  // Server runtime env first (set GEMINI_API_KEY on Vercel), then the
-  // build-time inlined VITE_ vars as fallback.
-  return (
-    env['GEMINI_API_KEY'] ||
-    env['GOOGLE_API_KEY'] ||
-    env['VITE_GEMINI_API_KEY'] ||
-    import.meta.env['VITE_GEMINI_API_KEY'] ||
-    ''
-  )
+  return env['GEMINI_API_KEY'] || env['GOOGLE_API_KEY'] || ''
 }
 
 type GeminiOptions = {
@@ -60,7 +52,7 @@ function resolveModel(model: string): string {
 
 async function callGemini(path: string, opts: GeminiOptions, query = '') {
   const key = geminiApiKey()
-  if (!key) throw new Error('Missing VITE_GEMINI_API_KEY')
+  if (!key) throw new Error('Missing GEMINI_API_KEY')
 
   const res = await fetch(`${API_BASE}/${resolveModel(opts.model)}:${path}${query}`, {
     method: 'POST',
