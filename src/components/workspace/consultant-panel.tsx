@@ -9,6 +9,8 @@ import {
   Plus,
   Paperclip,
   Mic,
+  Maximize2,
+  Minimize2,
 } from 'lucide-react'
 import {
   Conversation,
@@ -53,6 +55,8 @@ export function ConsultantPanel({
   error,
   messages,
   spec,
+  expanded,
+  onToggleExpanded,
 }: {
   prompt: string
   onPromptChange: (v: string) => void
@@ -64,6 +68,8 @@ export function ConsultantPanel({
   error: string | null
   messages: ConsultantMessage[]
   spec: DesignSpec
+  expanded: boolean
+  onToggleExpanded: () => void
 }) {
   const endRef = useRef<HTMLDivElement>(null)
   const busy = generating || chatting
@@ -84,6 +90,15 @@ export function ConsultantPanel({
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           Autonomous agent
         </span>
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          onClick={onToggleExpanded}
+          aria-label={expanded ? 'Restore workspace panels' : 'Expand chat'}
+          title={expanded ? 'Restore workspace panels' : 'Expand chat'}
+        >
+          {expanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+        </Button>
       </div>
 
       {/* Conversation */}
@@ -146,7 +161,7 @@ export function ConsultantPanel({
       <div className="shrink-0 border-t border-border p-3">
         <PromptInput
           onSubmit={() => onGenerate()}
-          className="glow-border [&_[data-slot=input-group]]:rounded-xl [&_[data-slot=input-group]]:bg-card/70"
+          className="border-0 shadow-none [&_[data-slot=input-group]]:rounded-xl [&_[data-slot=input-group]]:border-0 [&_[data-slot=input-group]]:bg-muted/70 [&_[data-slot=input-group]]:shadow-none [&_[data-slot=input-group]]:ring-0"
         >
           <PromptInputTextarea
             value={prompt}

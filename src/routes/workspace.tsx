@@ -97,6 +97,7 @@ function WorkspacePage() {
   const [sessions, setSessions] = useState<Session[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
   const [deployState, setDeployState] = useState<'idle' | 'deploying' | 'deployed'>('idle')
+  const [chatExpanded, setChatExpanded] = useState(false)
 
   // Pane 3 — theme modifier drawer + its 3.6s hydration loop.
   const [drawerOpen, setDrawerOpen] = useState(true)
@@ -376,8 +377,8 @@ function WorkspacePage() {
   )
 
   return (
-    <div className="workspace-neutral-lines flex h-screen overflow-hidden bg-background text-foreground">
-      <WorkspaceSidebar
+    <div className="workspace-light flex h-screen overflow-hidden bg-background text-foreground">
+      {!chatExpanded && <WorkspaceSidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
         tab={tab}
@@ -388,17 +389,17 @@ function WorkspacePage() {
         onNew={newProject}
         onDelete={deleteSession}
         spec={spec}
-      />
+      />}
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
-        <WorkspaceTopnav
+        {!chatExpanded && <WorkspaceTopnav
           projectName={spec.hasContent ? spec.appName : 'Untitled project'}
           deployState={deployState}
           onDeploy={handleDeploy}
-        />
+        />}
 
         {/* Three-pane console: consultant · preview · modifier drawer */}
-        <div className="grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(340px,420px)_1fr_auto]">
+        <div className={chatExpanded ? 'grid min-h-0 flex-1 grid-cols-1' : 'grid min-h-0 flex-1 grid-cols-1 lg:grid-cols-[minmax(360px,460px)_1fr_auto]'}>
           <div className="min-h-0 border-b border-border lg:border-b-0 lg:border-r">
             <ConsultantPanel
               prompt={prompt}
@@ -411,18 +412,20 @@ function WorkspacePage() {
               error={error}
               messages={messages}
               spec={spec}
+              expanded={chatExpanded}
+              onToggleExpanded={() => setChatExpanded((value) => !value)}
             />
           </div>
 
-          <div className="hidden min-h-0 lg:block">
+          {!chatExpanded && <div className="hidden min-h-0 lg:block">
             <ResponsivePreview
               spec={spec}
               building={generating || hydrating}
               onEdit={(updater) => setSpec((s) => updater(s))}
             />
-          </div>
+          </div>}
 
-          <ThemeDrawer
+          {!chatExpanded && <ThemeDrawer
             spec={spec}
             open={drawerOpen}
             onToggle={() => setDrawerOpen((o) => !o)}
@@ -434,7 +437,7 @@ function WorkspacePage() {
             onIndustry={handleIndustry}
             onAppNameChange={handleAppNameChange}
             generating={generating || chatting}
-          />
+          />}
         </div>
       </div>
     </div>
