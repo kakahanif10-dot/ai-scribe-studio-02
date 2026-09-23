@@ -255,14 +255,14 @@ export function ThemeDrawer({
     <motion.aside
       animate={{ width: open ? 360 : 52 }}
       transition={{ duration: 0.3, ease: 'easeInOut' }}
-      className="relative z-10 hidden max-h-screen w-full max-w-[360px] shrink-0 flex-col overflow-hidden border-l border-white/10 bg-[oklch(0.14_0_0)] lg:flex"
+      className="relative z-10 hidden max-h-screen w-full max-w-[360px] shrink-0 flex-col overflow-hidden border-l border-border bg-muted/40 lg:flex"
     >
       {/* Header / collapse */}
-      <div className="flex h-12 shrink-0 items-center gap-2 border-b border-white/10 px-3">
+      <div className="flex h-12 shrink-0 items-center gap-2 border-b border-border px-3">
         <button
           onClick={onToggle}
           aria-label={open ? 'Collapse configuration matrix' : 'Expand configuration matrix'}
-          className="rounded-md p-1.5 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+          className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {open ? (
             <PanelRightClose className="h-4 w-4" />
@@ -271,7 +271,7 @@ export function ThemeDrawer({
           )}
         </button>
         {open && (
-          <span className="flex items-center gap-1.5 text-sm font-medium text-white">
+          <span className="flex items-center gap-1.5 text-sm font-medium text-foreground">
             <SlidersHorizontal className="h-4 w-4" />
             Configuration Matrix
           </span>
@@ -284,10 +284,10 @@ export function ThemeDrawer({
           <button
             onClick={onToggle}
             aria-label="Open configuration matrix"
-            className="h-7 w-7 rounded-full ring-2 ring-white/15"
+            className="h-7 w-7 rounded-full ring-2 ring-border"
             style={{ backgroundColor: spec.palette.accent }}
           />
-          <Pipette className="h-4 w-4 text-white/40" />
+          <Pipette className="h-4 w-4 text-muted-foreground" />
         </div>
       )}
 
@@ -303,10 +303,10 @@ export function ThemeDrawer({
             {/* Universal App Input (legacy spec) — 100% white-label.       */}
             {/* ---------------------------------------------------------- */}
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Describe Any App
               </p>
-              <div className="rounded-lg border border-white/10 bg-black/30 p-2 focus-within:border-white/30">
+              <div className="rounded-lg bg-muted p-2">
                 <textarea
                   value={prompt}
                   onChange={(e) => onPromptChange(e.target.value)}
@@ -323,15 +323,15 @@ export function ThemeDrawer({
                   }}
                   rows={2}
                   placeholder="Describe any app in any language — the engine detects the industry and brands it for you."
-                  className="w-full resize-none bg-transparent px-1 py-0.5 text-xs leading-relaxed text-white placeholder:text-white/40 focus:outline-none"
+                  className="w-full resize-none bg-transparent px-1 py-0.5 text-xs leading-relaxed text-foreground placeholder:text-muted-foreground focus:outline-none"
                 />
                 <div className="flex items-center justify-between px-1 pt-1">
-                  <span className="text-[9px] text-white/40">Enter to generate</span>
+                  <span className="text-[9px] text-muted-foreground">Enter to generate</span>
                   <button
                     onClick={onGenerate}
                     disabled={!prompt.trim() || generating}
                     aria-label="Generate app"
-                    className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-white text-black transition-opacity hover:opacity-90 disabled:opacity-40"
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
                   >
                     {generating ? (
                       <Wand2 className="h-3.5 w-3.5 animate-pulse" />
@@ -344,7 +344,7 @@ export function ThemeDrawer({
             </section>
 
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Try An Industry
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -353,7 +353,7 @@ export function ThemeDrawer({
                     key={it.label}
                     onClick={() => onIndustry(it.seed)}
                     disabled={generating}
-                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-white/70 transition-colors hover:border-white/30 hover:text-white disabled:opacity-40"
+                    className="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
                   >
                     {it.label}
                   </button>
@@ -362,49 +362,49 @@ export function ThemeDrawer({
             </section>
 
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 App Name / Brand
               </p>
               <input
                 value={spec.appName}
                 onChange={(e) => onAppNameChange(e.target.value)}
                 placeholder="Auto-branded from your prompt"
-                className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm font-medium text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-medium text-foreground placeholder:text-muted-foreground focus:border-ring focus:outline-none"
               />
             </section>
 
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Detected Context
               </p>
-              <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-black/20 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2">
                 <div className="flex items-center gap-1">
                   {(['bg', 'surface', 'accent', 'text'] as const).map((k) => (
                     <span
                       key={k}
-                      className="h-4 w-4 rounded-full ring-1 ring-white/15"
+                      className="h-4 w-4 rounded-full ring-1 ring-border"
                       style={{ backgroundColor: spec.palette[k] }}
                     />
                   ))}
                 </div>
                 <div className="min-w-0">
-                  <p className="truncate text-[11px] font-semibold leading-tight text-white">
+                  <p className="truncate text-[11px] font-semibold leading-tight text-foreground">
                     {detected.industry}
                   </p>
-                  <p className="truncate text-[9px] leading-tight text-white/40">
+                  <p className="truncate text-[9px] leading-tight text-muted-foreground">
                     {detected.template}
                   </p>
                 </div>
               </div>
             </section>
 
-            <div className="h-px bg-white/10" />
+            <div className="h-px bg-border" />
 
             {/* ---------------------------------------------------------- */}
             {/* 2D color area canvas — saturation (X) × value (Y)          */}
             {/* ---------------------------------------------------------- */}
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 2D Color Area Canvas
               </p>
               <div
@@ -455,10 +455,10 @@ export function ThemeDrawer({
               {/* Live hex readout + apply */}
               <div className="flex items-center gap-2">
                 <span
-                  className="h-8 w-8 shrink-0 rounded-md ring-1 ring-white/15"
+                  className="h-8 w-8 shrink-0 rounded-md ring-1 ring-border"
                   style={{ backgroundColor: preview ?? hex }}
                 />
-                <code className="flex-1 rounded-md border border-white/10 bg-black/30 px-2 py-1.5 font-mono text-xs text-white">
+                <code className="flex-1 rounded-md border border-border bg-background px-2 py-1.5 font-mono text-xs text-foreground">
                   {preview ?? hex}
                 </code>
                 <button
@@ -475,7 +475,7 @@ export function ThemeDrawer({
 
             {/* Quick brand swatches */}
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Brand Swatches
               </p>
               <div className="grid grid-cols-6 gap-1.5">
@@ -490,8 +490,8 @@ export function ThemeDrawer({
                       title={`${sw.name} · ${sw.hex}`}
                       aria-label={`${sw.name} ${sw.hex}`}
                       className={cn(
-                        'aspect-square rounded-md ring-1 ring-white/10 transition-transform hover:scale-110 disabled:opacity-40',
-                        active && 'ring-2 ring-white',
+                         'aspect-square rounded-md ring-1 ring-border transition-transform hover:scale-110 disabled:opacity-40',
+                         active && 'ring-2 ring-foreground',
                       )}
                       style={{ backgroundColor: sw.hex }}
                     />
@@ -505,13 +505,13 @@ export function ThemeDrawer({
             {/* ---------------------------------------------------------- */}
             <section className="space-y-2">
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   Palette Matrix Grid
                 </p>
-                <span className="text-[9px] text-white/40">drag to capture</span>
+                <span className="text-[9px] text-muted-foreground">drag to capture</span>
               </div>
               <div
-                className="thin-scroll max-h-48 touch-none overflow-y-scroll rounded-lg border border-white/10 bg-black/20 p-1.5"
+                className="thin-scroll max-h-48 touch-none overflow-y-scroll rounded-lg border border-border bg-background p-1.5"
                 style={{ overflowY: 'scroll' }}
               >
                 <div className="grid grid-cols-8 gap-1">
@@ -530,8 +530,8 @@ export function ThemeDrawer({
                         title={swatch}
                         aria-label={`Palette token ${swatch}`}
                         className={cn(
-                          'aspect-square rounded-sm ring-1 ring-white/5 transition-transform hover:z-10 hover:scale-125 disabled:opacity-40',
-                          active && 'ring-2 ring-white',
+                           'aspect-square rounded-sm ring-1 ring-border transition-transform hover:z-10 hover:scale-125 disabled:opacity-40',
+                           active && 'ring-2 ring-foreground',
                         )}
                         style={{ backgroundColor: swatch }}
                       />
@@ -543,23 +543,23 @@ export function ThemeDrawer({
 
             {/* Active token map */}
             <section className="space-y-2">
-              <p className="text-[11px] font-semibold uppercase tracking-wide text-white/50">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                 Active Theme Tokens
               </p>
               <div className="space-y-1">
                 {(['bg', 'surface', 'accent', 'text'] as const).map((token) => (
                   <div
                     key={token}
-                    className="flex items-center gap-2 rounded-md border border-white/10 bg-black/20 px-2 py-1.5"
+                    className="flex items-center gap-2 rounded-md border border-border bg-background px-2 py-1.5"
                   >
                     <span
-                      className="h-4 w-4 shrink-0 rounded ring-1 ring-white/15"
+                      className="h-4 w-4 shrink-0 rounded ring-1 ring-border"
                       style={{ backgroundColor: spec.palette[token] }}
                     />
-                    <span className="text-[11px] font-medium text-white/70">
+                    <span className="text-[11px] font-medium text-muted-foreground">
                       {token}
                     </span>
-                    <code className="ml-auto font-mono text-[10px] text-white/40">
+                    <code className="ml-auto font-mono text-[10px] text-muted-foreground">
                       {spec.palette[token]}
                     </code>
                   </div>
@@ -570,13 +570,13 @@ export function ThemeDrawer({
             <button
               onClick={resetToTemplate}
               disabled={disabled}
-              className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-white/70 transition-colors hover:bg-white/5 disabled:opacity-40"
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-40"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               Reset to template palette
             </button>
 
-            <p className="text-[10px] leading-relaxed text-white/40">
+            <p className="text-[10px] leading-relaxed text-muted-foreground">
               Drag across the matrix to intercept a live hex token, then release
               to run a 3.6s theme-hydration loop across the active simulator
               frame.
