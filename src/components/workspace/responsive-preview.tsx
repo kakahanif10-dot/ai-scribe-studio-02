@@ -50,7 +50,7 @@ export function ResponsivePreview({
   const [device, setDevice] = useState<Device>('mobile')
   const [galleryOpen, setGalleryOpen] = useState(false)
   const [attachment, setAttachment] = useState<string | null>(null)
-  const [zoom, setZoom] = useState<Zoom>(75)
+  const [zoom, setZoom] = useState<Zoom>(67)
   const [expanded, setExpanded] = useState(false)
   const [refreshKey, setRefreshKey] = useState(0)
   const fileRef = useRef<HTMLInputElement>(null)
@@ -67,7 +67,7 @@ export function ResponsivePreview({
   }
 
   return (
-    <div className={cn('flex h-full flex-col bg-[oklch(0.12_0_0)]', expanded && 'fixed inset-0 z-50')}>
+    <div className={cn('flex h-full flex-col bg-muted/50', expanded && 'fixed inset-0 z-50')}>
       {/* Toolbar */}
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-white/10 px-4">
         <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 p-0.5">
